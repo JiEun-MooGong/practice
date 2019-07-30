@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> 스크립트 예제 진행중 </title>
+
+    <script type="text/javascript">
+      Date.prototype.format = function(f) {
+      if (!this.valueOf()) return " ";
+
+      var weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+      var d = this;
+
+      return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+          switch ($1) {
+              case "yyyy": return d.getFullYear();
+              case "yy": return (d.getFullYear() % 1000).zf(2);
+              case "MM": return (d.getMonth() + 1).zf(2);
+              case "dd": return d.getDate().zf(2);
+              case "E": return weekName[d.getDay()];
+              case "HH": return d.getHours().zf(2);
+              case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+              case "mm": return d.getMinutes().zf(2);
+              case "ss": return d.getSeconds().zf(2);
+              case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+              default: return $1;
+          }
+        })
+      }
+      String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
+      String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
+      Number.prototype.zf = function(len){return this.toString().zf(len);};
+
+      // 출처: https://stove99.tistory.com/46 [스토브 훌로구]
+
+      let gv_today = new Date();
+      document.write("현재 시간은 " + gv_today.toLocaleString() + " 입니다. <br>");
+      document.write("현재 시간은 " + gv_today.format("yyyy년 MM월 dd일 a/p hh시 mm분 ss초") + " 입니다. <br>");
+
+      function show(p_num){
+        let lv_ttt = "";
+        if(p_num == 1){
+          lv_ttt = "<p id=\"herb1\">레몬 그라스는 더욱 향기롭다</p>";
+          alert("1");
+        }
+        else if(p_num == 2){
+          let lv_reply = confirm("진짜?");
+          lv_ttt = "<p id=\"herb2\">페퍼민트는 더해진다.";
+          lv_ttt += "<br>결과값 = " +lv_reply + "</p>";
+        }
+        else if(p_num == 3){
+          let lv_name = prompt("이름을 입력하세요.","no-name");
+          lv_ttt = "<p id=\"herb3\">로즈마리는 머리를 맑게하고 해소에 좋다.";
+          lv_ttt += "<br>이름 : "+ lv_name +"</p>";
+        }
+        document.getElementById("txt").innerHTML = lv_ttt;
+      }
+
+      function game(p_num){
+        for(let i=1;i<=p_num;i++){
+          if(i%3==0){
+          document.write("<span> 짝! </span>");
+          }
+          else {
+            document.write("<span>"+i+" </span>");
+          }
+        }
+      }
+
+    </script>
+  </head>
+  <body>
+    <ul>
+      <li><a href="#" onclick="show(1)"> 레몬글라스</a></li>
+      <li><a href="#" onclick="show(2)"> 페퍼민트 </a></li>
+      <li><a href="#" onclick="show(3)"> 로즈마리 </a></li>
+    </ul>
+    <div id ="txt">
+    </div>
+    <div id="game369">
+      <button type="button" style="color: #fff; background:blue; font-size:2em; border-radius:0.5em; padding:5px 20px;" onclick="game(40)">start</button>
+    </div>
+  </body>
+</html>
